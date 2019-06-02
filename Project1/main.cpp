@@ -1,14 +1,16 @@
 #include "vector.h"
 #include <conio.h>
-#include <cmath>
+
+#define _USE_MATH_DEFINES
+
+#include <math.h>
 #include <iostream>
 
-#define PI 3.14
 
 using namespace std;
 
 
-bool intersect(double r, vector3 sphereC, vector3 camera, vector3 ray) {
+bool doesItIntersectSphere(double r, vector3 sphereC, vector3 camera, vector3 ray) {
 	double a, b, c;
 	a = ray.dot(ray);
 	b = 2 * ray.dot(camera - sphereC);
@@ -24,44 +26,49 @@ int main() {
 	vector3 third(0, 0, 1);
 	triangle myT(first, second, third);*/
 
-	vector3 camera(0, 0, -1),
+	vector3 camera(0, 0, 0),
 		direction(0, 0, 1);
 	vector3 plane = camera + direction.norm();
 
-	int size = 51;
+	double height = 48,
+		width = 64;
 
-	bool** canvas = new bool* [size];
-	for (int i = 0; i < size; i++) {
-		canvas[i] = new bool[size];
+	bool** canvas = new bool* [height]; //2d canvas of pixels
+	for (int i = 0; i < height; i++) {
+		canvas[i] = new bool[width];
 	}
 
 	double r = 1;
-	vector3 center(0, 0, 2);
+	vector3 center(0, 0, 10); //sphere radius and centre coordinates
 
+	double fov = 30;
+	double angle = tan(M_PI * 0.5 * fov / 180.);
 
-	for (int x = 0; x < size; x++) {
-		for (int y = 0; y < size; y++) {
-			double xNorm = (x - size/2) / (double)size,
-				yNorm = - (y - size/2) / (double)size;
-			double cameraPlane = (camera - plane).getLength();
-			double fov = PI / 3;
-			double realPlaneH = cameraPlane * tan(fov);
-			vector3 temp(xNorm * realPlaneH / 2, yNorm * realPlaneH / 2, 0);
-			vector3 position = plane + temp;
-			vector3 dir = position - camera;
-			canvas[y][x] = intersect(r, center, camera, dir);
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			double xN = (2 * ((x + 0.5) / width) - 1) * angle * width / height,
+				yN = (1 - 2 * ((y + 0.5) / height)) * angle;
+
+			vector3 temp(xN, yN, -1);
+			/*vector3 position = plane + temp;
+			vector3 dir = position - camera;*/
+			 temp = temp.norm();
+			canvas[y][x] = doesItIntersectSphere(r, center, camera, temp);
 		}
 	}
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
+
+
+
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
 			if (canvas[i][j])
-				cout << "X ";
+				cout << "*";
 			else
-				cout << ". ";
+				cout << ".";
 		}
 		cout << endl;
 	}
-	for (size_t i = 0; i < size; i++){
+	for (size_t i = 0; i < height; i++) {
 		delete[] canvas[i];
 	}
 }
