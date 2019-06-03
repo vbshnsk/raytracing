@@ -26,12 +26,12 @@ int main() {
 	vector3 third(0, 0, 1);
 	triangle myT(first, second, third);*/
 
-	vector3 camera(0, 0, 0),
-		direction(0, 0, 1);
-	vector3 plane = camera + direction.norm();
+	vector3 camera(0, 0, 10);
+		//direction(0, 0, 1);
+	//vector3 plane = camera + direction.norm();
 
-	double height = 48,
-		width = 64;
+	double height = 30,
+		width = 30;
 
 	bool** canvas = new bool* [height]; //2d canvas of pixels
 	for (int i = 0; i < height; i++) {
@@ -39,21 +39,21 @@ int main() {
 	}
 
 	double r = 1;
-	vector3 center(0, 0, 10); //sphere radius and centre coordinates
+	vector3 center(0, 0, 0); //sphere radius and centre coordinates
 
 	double fov = 30;
 	double angle = tan(M_PI * 0.5 * fov / 180.);
 
 	for (int x = 0; x < width; x++) {
 		for (int y = 0; y < height; y++) {
-			double xN = (2 * ((x + 0.5) / width) - 1) * angle * width / height,
+			double xN = (2 * ((x + 0.5)/ width) - 1) * angle * width / height,
 				yN = (1 - 2 * ((y + 0.5) / height)) * angle;
 
-			vector3 temp(xN, yN, -1);
+			vector3 direction(xN, yN, 1);
 			/*vector3 position = plane + temp;
 			vector3 dir = position - camera;*/
-			 temp = temp.norm();
-			canvas[y][x] = doesItIntersectSphere(r, center, camera, temp);
+			 direction = direction.norm();
+			canvas[y][x] = doesItIntersectSphere(r, center, camera, direction);
 		}
 	}
 
@@ -62,9 +62,9 @@ int main() {
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			if (canvas[i][j])
-				cout << "*";
+				cout << "* ";
 			else
-				cout << ".";
+				cout << ". ";
 		}
 		cout << endl;
 	}
