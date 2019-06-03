@@ -1,8 +1,8 @@
 #include "vector.h"
+#include "image.h"
+
 #include <conio.h>
-
 #define _USE_MATH_DEFINES
-
 #include <math.h>
 #include <iostream>
 
@@ -17,6 +17,12 @@ bool doesItIntersectSphere(double r, vector3 sphereC, vector3 camera, vector3 ra
 	c = (camera - sphereC).dot(camera - sphereC) - r * r;
 	double D = b * b - 4 * a * c;
 	if (D < 0) return false;
+	if (D > 0) {
+		double x1 = (-b + sqrt(D)) / (2*a),
+			x2 = (-b - sqrt(D)) / (2*a);
+		if (x1 < 0 && x2 < 0)
+			return false;
+	}
 	return true;
 }
 
@@ -26,12 +32,10 @@ int main() {
 	vector3 third(0, 0, 1);
 	triangle myT(first, second, third);*/
 
-	vector3 camera(0, 0, 10);
-		//direction(0, 0, 1);
-	//vector3 plane = camera + direction.norm();
+	vector3 camera(0, 0, -3);
 
-	double height = 30,
-		width = 30;
+	double height = 1080,
+		width = 1920;
 
 	bool** canvas = new bool* [height]; //2d canvas of pixels
 	for (int i = 0; i < height; i++) {
@@ -39,27 +43,46 @@ int main() {
 	}
 
 	double r = 1;
-	vector3 center(0, 0, 0); //sphere radius and centre coordinates
+	vector3 center(0, 0, 5); //sphere radius and centre coordinates
 
-	double fov = 30;
+	double fov = 45;
 	double angle = tan(M_PI * 0.5 * fov / 180.);
 
 	for (int x = 0; x < width; x++) {
 		for (int y = 0; y < height; y++) {
 			double xN = (2 * ((x + 0.5)/ width) - 1) * angle * width / height,
 				yN = (1 - 2 * ((y + 0.5) / height)) * angle;
-
 			vector3 direction(xN, yN, 1);
-			/*vector3 position = plane + temp;
-			vector3 dir = position - camera;*/
-			 direction = direction.norm();
+			direction = direction.norm();
 			canvas[y][x] = doesItIntersectSphere(r, center, camera, direction);
 		}
 	}
 
 
+	PIXELDATA** sphere = new PIXELDATA*[height];
 
-	for (int i = 0; i < height; i++) {
+	for (int i = 0; i < height; i++)
+		sphere[i] = new PIXELDATA[width];
+
+	for (int i = 0; i < height; i++)
+		for (int j = 0; j < width; j++)
+			if (canvas[i][j]) {
+				sphere[i][j].redComponent = 255;
+				sphere[i][j].greenComponent = 0;
+				sphere[i][j].blueComponent = 0;
+			}
+			else {
+				sphere[i][j].redComponent = 255;
+				sphere[i][j].greenComponent = 255;
+				sphere[i][j].blueComponent = 255;
+			}
+	
+
+	Image sphereI(sphere, "sphere.bmp", height, width);
+	sphereI.createFile();
+
+
+	/*for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			if (canvas[i][j])
 				cout << "* ";
@@ -67,7 +90,7 @@ int main() {
 				cout << ". ";
 		}
 		cout << endl;
-	}
+	}*/
 	for (size_t i = 0; i < height; i++) {
 		delete[] canvas[i];
 	}
