@@ -34,8 +34,8 @@ int main() {
 
 	vector3 camera(0, 0, -3);
 
-	double height = 1080,
-		width = 1920;
+	double height = 1000,
+		width = 1500;
 
 	bool** canvas = new bool* [height]; //2d canvas of pixels
 	for (int i = 0; i < height; i++) {
@@ -45,7 +45,7 @@ int main() {
 	double r = 1;
 	vector3 center(0, 0, 5); //sphere radius and centre coordinates
 
-	double fov = 45;
+	double fov = 30;
 	double angle = tan(M_PI * 0.5 * fov / 180.);
 
 	for (int x = 0; x < width; x++) {
@@ -67,9 +67,9 @@ int main() {
 	for (int i = 0; i < height; i++)
 		for (int j = 0; j < width; j++)
 			if (canvas[i][j]) {
-				sphere[i][j].redComponent = 255;
-				sphere[i][j].greenComponent = 0;
-				sphere[i][j].blueComponent = 0;
+				sphere[i][j].redComponent = 239;
+				sphere[i][j].greenComponent = 51;
+				sphere[i][j].blueComponent = 64;
 			}
 			else {
 				sphere[i][j].redComponent = 255;
