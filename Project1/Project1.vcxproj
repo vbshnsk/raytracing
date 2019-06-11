@@ -125,12 +125,14 @@
   <ItemGroup>
     <ClInclude Include="cameraPlane.h" />
     <ClInclude Include="image.h" />
+    <ClInclude Include="OBJparser.h" />
     <ClInclude Include="vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cameraPlane.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="OBJparser.cpp" />
     <ClCompile Include="vector.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

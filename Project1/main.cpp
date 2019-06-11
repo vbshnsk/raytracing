@@ -1,17 +1,18 @@
 #include "vector.h"
 #include "image.h"
 #include "cameraPlane.h"
+#include "OBJparser.h"
 
 
 using namespace std;
 
 int main() {
+	OBJparser cow("cow.obj");
 	double height = 1000,
 		width = 1000;
-	cameraPlane main(-5, height, width);
+	cameraPlane main(-1, height, width);
 	main.setAngle(30);
-	triangle T(new vector3(-5, 0, 10), new vector3(5, 0, 10), new vector3(0, 5, 10));
-	main.putOnScene(T);
+	main.putOnScene(cow.triangles);
 	main.traceRays();
 	main.name = "image.bmp";
 	main.createFile();

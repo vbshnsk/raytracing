@@ -5,8 +5,7 @@
 #include <math.h>
 #include <vector>
 
-class cameraPlane :
-	public Image
+class cameraPlane : public Image
 {
 private:
 	double angle;
@@ -24,6 +23,7 @@ public:
 	void traceRays();
 	void setAngle(double fov);
 	void putOnScene(triangle T);
+	void putOnScene(std::vector<triangle*> Ts) { trianglesOnScene = Ts; };
 	void putOnScene(sphere S);
 
 	cameraPlane(double z, int height, int width);
