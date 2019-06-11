@@ -9,6 +9,11 @@ cameraPlane::cameraPlane(double x, double y, double z, int canvasH, int canvasW)
 	this->setPixels(canvasH, canvasW);
 }
 
+void cameraPlane::putOnScene(vector3 center, vector3 max, vector3 min, std::vector<triangle*> triangles)  {
+	objects = OCTree(center, max, min);
+	objects.insert(triangles);
+}
+
 bool cameraPlane::rayIntersectsTriangle(triangle* T, vector3& pointOfIntersection) {
 	const double EPS = 0.0000001;
 	vector3 vertex0 = T->getA();
@@ -71,12 +76,11 @@ void cameraPlane::traceRays() {
 				yD = (2 * ((y + 0.5) / this->header.depth) - 1) * angle;
 			currentRay = new vector3(xD, -1, yD);
 			currentRay = currentRay->norm();
-			
-			std::vector<triangle> validTriangles;
-			objects.top->checkPossibleIntersections(*camera, *currentRay, validTriangles);
+			std::vector<triangle*> validTriangles;
+			objects.checkIntersection(*currentRay, *camera, validTriangles);
 			for (auto triangle : validTriangles)
-				if (rayIntersectsTriangle(&triangle, t))
-					pixels[y][x] = triangle.getColour();
+				if (rayIntersectsTriangle(triangle, t))
+					pixels[y][x] = triangle->getColour();
 			/*for (auto triangle : trianglesOnScene)
 				if (rayIntersectsTriangle(triangle, t))
 					pixels[y][x] = triangle->getColour();

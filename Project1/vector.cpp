@@ -15,10 +15,11 @@ vector3 vector3::operator+(vector3 other) {
 }
 
 vector3 vector3::operator*(double power) {
-	this->x *= power;
-	this->y *= power;
-	this->z *= power;
-	return *this;
+	vector3 result;
+	result.x = this->x*power;
+	result.y = this->y * power;
+	result.z = this->z * power;
+	return result;
 }
 
 vector3 vector3::operator-(vector3 other) {

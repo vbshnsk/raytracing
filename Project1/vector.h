@@ -19,6 +19,7 @@ public:
 	double dot(vector3 other) { return other.x* x + other.y * y + other.z * z; }
 	double getLength() { return length; };
 	~vector3();
+	friend class OCTree;
 };
 
 

@@ -126,7 +126,6 @@
     <ClInclude Include="cameraPlane.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="OBJparser.h" />
-    <ClInclude Include="OCNode.h" />
     <ClInclude Include="OCTree.h" />
     <ClInclude Include="vector.h" />
   </ItemGroup>
@@ -135,7 +134,6 @@
     <ClCompile Include="image.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OBJparser.cpp" />
-    <ClCompile Include="OCNode.cpp" />
     <ClCompile Include="OCTree.cpp" />
     <ClCompile Include="vector.cpp" />
   </ItemGroup>

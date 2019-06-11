@@ -21,8 +21,8 @@ public:
 
 	void traceRays();
 	void setAngle(double fov);
-	//void putOnScene(triangle T);
-	void putOnScene(std::vector<triangle*> Ts, double max) { objects = OCTree(max, Ts); };
+	void putOnScene(triangle T);
+	void putOnScene(vector3 center, vector3 max, vector3 min, std::vector<triangle*> triangles);
 	void putOnScene(sphere S);
 
 	cameraPlane(double x, double y, double z, int height, int width);
