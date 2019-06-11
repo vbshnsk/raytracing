@@ -2,9 +2,9 @@
 
 
 
-cameraPlane::cameraPlane(double z, int canvasH, int canvasW)
+cameraPlane::cameraPlane(double x, double y, double z, int canvasH, int canvasW)
 {
-	this->camera = new vector3(0, 0, z);
+	this->camera = new vector3(x, y, z);
 	this->setHeader(canvasH, canvasW);
 	this->setPixels(canvasH, canvasW);
 }
@@ -65,25 +65,31 @@ void cameraPlane::setAngle(double fov) {
 
 void cameraPlane::traceRays() {
 	vector3 t;
-	for (int x = 0; x < this->header.width; x++) {
-		for (int y = 0; y < this->header.depth; y++) {
+	for (int y = 0; y < this->header.depth; y++) {
+		for (int x = 0; x < this->header.width; x++) {
 			double xD = (2 * ((x + 0.5) / this->header.width) - 1) * angle * this->header.width / this->header.depth,
-				yD = (1 - 2 * ((y + 0.5) / this->header.depth)) * angle;
-			currentRay = new vector3(xD, yD, 1);
+				yD = (2 * ((y + 0.5) / this->header.depth) - 1) * angle;
+			currentRay = new vector3(xD, -1, yD);
 			currentRay = currentRay->norm();
-			for (auto triangle : trianglesOnScene)
+			
+			std::vector<triangle> validTriangles;
+			objects.top->checkPossibleIntersections(*camera, *currentRay, validTriangles);
+			for (auto triangle : validTriangles)
+				if (rayIntersectsTriangle(&triangle, t))
+					pixels[y][x] = triangle.getColour();
+			/*for (auto triangle : trianglesOnScene)
 				if (rayIntersectsTriangle(triangle, t))
 					pixels[y][x] = triangle->getColour();
 			for (auto sphere : spheresOnScene)
 				if (rayIntersectsSphere(sphere, t))
-					pixels[y][x] = sphere->getColour();
+					pixels[x][y] = sphere->getColour();*/
 		}
 	}
 }
 
-void cameraPlane::putOnScene(triangle T) {
-	trianglesOnScene.push_back(new triangle(T));
-}
+//void cameraPlane::putOnScene(triangle T) {
+//	trianglesOnScene.push_back(new triangle(T));
+//}
 
 void cameraPlane::putOnScene(sphere S) {
 	spheresOnScene.push_back(new sphere(S));

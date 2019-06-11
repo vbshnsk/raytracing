@@ -27,6 +27,12 @@
     <ClInclude Include="OBJparser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OCTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OCNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vector.cpp">
@@ -42,6 +48,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OBJparser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OCTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OCNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

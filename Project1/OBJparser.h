@@ -12,6 +12,7 @@ private:
 	std::vector<vector3*> vertices;
 	std::vector<vector3*> normals;
 public:
+	double max;
 	std::vector<triangle*> triangles;
 	OBJparser(const char* name);
 	~OBJparser();

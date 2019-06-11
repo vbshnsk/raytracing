@@ -6,9 +6,9 @@
 class vector3
 {
 protected:
+public:
 	double x, y, z;
 	double length;
-public:
 	vector3() {}
 	vector3(double x, double y, double z);
 	vector3 operator +(vector3 other);

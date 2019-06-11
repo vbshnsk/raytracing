@@ -7,6 +7,7 @@ OBJparser::OBJparser(const char* name)
 	std::ifstream file(name);
 	std::string currentLine;
 	std::vector<vector3*> unsortedN;
+	max = 0;
 	while (std::getline(file, currentLine)) {
 		if (currentLine.substr(0, 2) == "v ") {
 			std::istringstream vert(currentLine.substr(2));
@@ -14,6 +15,9 @@ OBJparser::OBJparser(const char* name)
 			vert >> x;
 			vert >> y;
 			vert >> z;
+			max = max > x ? max : x;
+			max = max > y ? max : y;
+			max = max > z ? max : z;
 			vertices.push_back(new vector3(x, y, z));
 		}
 		if (currentLine.substr(0, 2) == "vn") {
