@@ -14,16 +14,40 @@ vector3 vector3::operator+(vector3 other) {
 	return temp;
 }
 
+vector3 vector3::operator*(double power) {
+	vector3 result;
+	result.x = this->x*power;
+	result.y = this->y * power;
+	result.z = this->z * power;
+	return result;
+}
+
 vector3 vector3::operator-(vector3 other) {
 	vector3 temp(this->x - other.x, this->y - other.y, this->z - other.z);
 	return temp;
 }
 
-vector3 vector3::norm() {
-	vector3 temp(x / length, y / length, z / length);
-	return temp;
+vector3* vector3::norm() {
+	return new vector3(x / length, y / length, z / length);
+}
+
+vector3 vector3::cross(vector3 other) {
+	vector3 result(
+		this->y * other.z - this->z * other.y,
+		this->z * other.x - this->x * other.z,
+		this->x * other.y - this->y * other.x);
+	return result;
 }
 
 vector3::~vector3()
 {
+}
+
+triangle::triangle(vector3* a, vector3* b, vector3* c) {
+	this->a = *a;
+	this->b = *b;
+	this->c = *c;  
+	this->colour.blueComponent = 0; 
+	this->colour.greenComponent = 0; 
+	this->colour.redComponent = 0;
 }

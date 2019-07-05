@@ -18,12 +18,36 @@
     <ClInclude Include="vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cameraPlane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJparser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OCTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cameraPlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJparser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OCTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
