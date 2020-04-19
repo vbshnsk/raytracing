@@ -1,1 +1,2 @@
-# introtoprogramminglab5
+# raytracing
+Basic raytracing, done as a university task.
